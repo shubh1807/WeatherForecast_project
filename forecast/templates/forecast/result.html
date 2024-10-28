@@ -1,0 +1,54 @@
+<!-- forecast/templates/forecast/result.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Forecast Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Forecast Results for {{ days }} Days</h1>
+    
+    <!-- Table to display the forecast data -->
+    <h2>Table</h2>
+    <table border="1">
+        <tr>
+            <th>Day</th>
+            <th>Forecasted Temperature</th>
+        </tr>
+        {% for row in forecast_data %}
+        <tr>
+            <td>{{ row.Day }}</td>
+            <td>{{ row.Forecast }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Chart to display forecast data -->
+    <h2>Chart</h2>
+    <canvas id="forecastChart"></canvas>
+
+    <script>
+        const ctx = document.getElementById('forecastChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ chart_data.days | safe }},
+                datasets: [{
+                    label: 'Forecasted Temperature',
+                    data: {{ chart_data.forecast_values | safe }},
+                    borderColor: 'rgb(75, 192, 192)',
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { display: true, title: { display: true, text: 'Days' }},
+                    y: { display: true, title: { display: true, text: 'Temperature' }}
+                }
+            }
+        });
+    </script>
+</body>
+</html>

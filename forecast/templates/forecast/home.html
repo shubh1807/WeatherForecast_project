@@ -1,0 +1,17 @@
+<!-- forecast/templates/forecast/home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Temperature Forecast</title>
+</head>
+<body>
+    <h1>Enter Number of Days for Forecast</h1>
+    <form action="{% url 'forecast' %}" method="post">
+        {% csrf_token %}
+        <label for="days">Days:</label>
+        <input type="number" id="days" name="days" min="1" required>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
